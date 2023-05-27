@@ -25,6 +25,12 @@
     <option value="asc">Ascending</option>
     <option value="asc">Ascending</option>
     </select>
+    <select id="filter">
+        <option value="">Filter By Profession</option>
+        <option value="Web Developer">Web Developer</option>
+        <option value="Graphic Designer">Graphic Designer</option>
+        <option value="Student">Student</option>
+    </select>
 
 <div id="main" style="text-align: center;  width:60%;margin:auto;margin-top: 50px;display:grid;grid-template-columns: repeat(2,1fr);gap:20px;">
 
@@ -49,8 +55,8 @@ page.style.display="block"
     }
 
 let maindiv=document.getElementById("main")
-function mydata(pag,value){
-    fetch(`https://mock4bakenddatafinal.onrender.com/freelancers?_page=${pag}&_limit=4${value?`&_sort=hourly_rate&_order=${value}`:""}`).then((res)=>
+function mydata(pag,value,filter){
+    fetch(`https://mock4bakenddatafinal.onrender.com/freelancers?_page=${pag}&_limit=4${value?`&_sort=hourly_rate&_order=${value}`:""}${filter?`&profession=${filter}`:""}`).then((res)=>
     
     {
         
@@ -70,13 +76,22 @@ mydata(pag)
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 let sorting=document.getElementById("sort")
-
+let filter;
+let sortingvalue;
 sorting.addEventListener("change",()=>{
-    mydata(pag,sorting.value)
+    sortingvalue=sorting.value
+    mydata(pag,sorting.value,filter)
 
 
 })
+let filterdata=document.getElementById("filter")
+filterdata.addEventListener("change",()=>{
+filter=filterdata.value
+mydata(pag,sortingvalue,filter)
 
+
+
+})
 
 
 
