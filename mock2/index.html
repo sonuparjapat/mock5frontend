@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ 
+        <nav style="display: flex;justify-content: space-around;">
+<button id="adminbutton">Admin</button>
+<button id="userbutton">User</button>
+        </nav>
+  
+</body>
+<script>
+    const admin=document.getElementById("adminbutton")
+    const user=document.getElementById("userbutton")
+    admin.addEventListener("click",()=>{
+        window.location.href="./Admin.html"
+    })
+    user.addEventListener("click",()=>{
+        window.location.href="./User.html"
+    })
+    </script>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #free{
+            display: none;
+        }
+        .image-class{
+            width:100%;
+            height: 200px;
+        }
+        
+    </style>
+</head>
+<body>
+   <div id="free" style="display: none;">
+
+<h2 style="text-align:center;">Freelancer Page</h2>
+<div id="main" style="text-align: center;  width:60%;margin:auto;margin-top: 50px;display:grid;grid-template-columns: repeat(2,1fr);gap:20px;">
+
+<!-- appending here -->
+
+</div>
+<div style="width:60%;margin:auto;margin-top: 30px;">
+<button style="width:200px" id="prev">prev</button><span id="pageno">1</span><button id="next" style="width:200px">next</button>
+</div>
+</div> 
+</body>
+<script>
+let pag=1
+    let pagenumber=document.getElementById("pageno")
+    let prevpage=document.getElementById("prev")
+    let nextpage=document.getElementById("next")
+let totalcount=0
+    let usertoken=localStorage.getItem("token")
+    let page=document.getElementById("free")
+    if(usertoken){
+page.style.display="block"
+    }
+
+let maindiv=document.getElementById("main")
+function mydata(pag){
+    fetch(`https://mock4bakenddatafinal.onrender.com/freelancers?_page=${pag}&_limit=4`).then((res)=>
+    
+    {
+        
+let totalcount=res.headers.get("X-Total-Count")
+
+
+        let totlaPages=Math.ceil(totalcount/4)
+
+        return res.json()}).then((reso)=>{
+
+
+getdata(reso)}
+)
+}
+mydata(pag)
+
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+let total=0
+function handle(totalpage){
+    total=total+totalpage
+}
+
+prevpage.addEventListener("click",()=>{
+  
+    handlepage(-1)
+    mydata(pag)
+})
+nextpage.addEventListener("click",()=>{
+  
+        handlepage(1)
+   mydata(pag)
+    
+ 
+})
+function handlepage(val){
+   pag=pag+val
+
+}
+
+
+function getdata(data){
+maindiv.innerHTML=null
+
+    data.forEach((el,index)=>{
+        let div=document.createElement("div")
+        
+let image=document.createElement("img")
+// image.setAttribute("class",el["profile_picture"])
+image.src=el["profile_picture"]
+image.alt="no image provided"
+image.classList.add("image-class")
+let name=document.createElement("p")
+name.classList.add("name")
+name.innerText=`${el.name}`
+let email=document.createElement("p")
+
+email.innerText=`Email:${el.email}`
+
+let profession=document.createElement("p")
+
+profession.innerText=`Profession:${el.profession}`
+let skills=document.createElement("p")
+
+skills.innerText=`Skills:${(el.skills).join(" ")}`
+let hourly=document.createElement("p")
+
+hourly.innerText=`Hourly Rate:$${(el.hourly_rate)}`
+let book=document.createElement("p")
+
+book.innerText=`Booking Status:${(el.isBooked)}`
+
+let edit=document.createElement("button")
+edit.innerText="Edit"
+
+let deletebutton=document.createElement("button")
+deletebutton.innerText="Delete"
+let hireme=document.createElement("button")
+hireme.innerText="Hire Me"
+
+div.append(image,name,email,profession,skills,hourly,book,edit,deletebutton,hireme)
+maindiv.append(div)
+
+
+
+
+    })
+}
+
+</script>
+</html>

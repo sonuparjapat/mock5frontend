@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ 
+        <nav style="display: flex;justify-content: space-around;">
+<button id="adminbutton">Admin</button>
+<button id="userbutton">User</button>
+        </nav>
+        <!-- - Name
+        - Profile Picture
+        - Email
+        - Password
+        - Profession (Should be a select tag with Student, Web Developer, Graphic Designer as options)
+        - Skills (Can be Multiple Skills)
+        - Hourly Rate -->
+        <div style="width:60%;margin:auto" >
+        <form id="formdata">
+            <input style="display: block ;width:100%; margin-top:10px;" type="text" id="name" placeholder="Name"/>
+            <input style="display: block;width:100%; margin-top:10px;" type="text" id="profile" placeholder="Profile Picture"/>
+            <input style="display: block;width:100%; margin-top:10px;" type="email" id="email" placeholder="Email"/>
+            <input style="display: block;width:100%; margin-top:10px;" type="password" id="password" placeholder="Password"/>
+            <select style="display:block;width:100%;margin-top:10px;" id="profession">
+                <option value="">Profession</option>
+                <option value="Student">Student</option>
+                <option value="Web Debeloper">Web Developer</option>
+                <option value="Graphic Designer">Graphic Designer</option>
+            </select>
+            <label style="display:block;margin-top:10px">Skills</label>
+           <lable>HTML</lable> <input id="Html" type="checkbox" value="HTML"/>
+           <lable>CSS</lable>  <input id="Css" type="checkbox" value="CSS"/>
+           <lable>JavaScript</lable>  <input id="js" type="checkbox" value="JavaScript"/>
+            <input style="display:block;margin-top:10px;width:100%;" type="number" id="hourly" placeholder="Hourly Rate"/>
+          <label style="margin-top: 10px;width:100%;">isBooked</label>  <input  style="margin-top: 10px;" type="checkbox" id="booked"/> 
+            <!-- <input type="text" id="hourly" placeholder=""/> -->
+      
+      <input style="width:100%" type="submit"/>
+      
+        </form></div>
+</body>
+<script>
+    const admin=document.getElementById("adminbutton")
+    const user=document.getElementById("userbutton")
+    admin.addEventListener("click",()=>{
+        window.location.href="./Admin.html"
+    })
+    user.addEventListener("click",()=>{
+        window.location.href="./User.html"
+    })
+    let registerdata=document.getElementById("formdata")
+    let checkbox1=document.getElementById("Html")
+    let checkbox2=document.getElementById("Css")
+    let checkbox3=document.getElementById("js")
+    registerdata.addEventListener("submit",(event)=>{
+        event.preventDefault()
+        let skills=[]
+        if(checkbox1.checked){
+            skills.push(checkbox1.value)
+        }
+        if(checkbox2.checked){
+            skills.push(checkbox2.value)
+        }
+        if(checkbox3.checked){
+            skills.push(checkbox3.value)
+        }
+        // console.log(checkbox3.checked)
+
+// console.log(skills)
+
+        let obj={
+            "name":registerdata.name.value,
+            "email":registerdata.email.value,
+            "password":registerdata.password.value,
+            "profession":registerdata.profession.value,
+            "skills":skills,
+            "profile_picture":registerdata.profile.value,
+            "hourly_rate":registerdata.hourly.value,
+            "isBooked":registerdata.booked.checked
+        }
+     
+
+  
+        fetch("https://mock4bakenddatafinal.onrender.com/freelancers",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(obj)
+        }).then((res)=>res.json()).then((res)=>alert("Successfully registered")).catch((err)=>console.log(err))
+
+        // }
+    })
+    </script>
+</html>
