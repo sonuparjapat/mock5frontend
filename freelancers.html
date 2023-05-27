@@ -20,6 +20,12 @@
    <div id="free" style="display: none;">
 
 <h2 style="text-align:center;">Freelancer Page</h2>
+<select id="sort">
+    <option value="">sort by hourly_rate</option>
+    <option value="asc">Ascending</option>
+    <option value="asc">Ascending</option>
+    </select>
+
 <div id="main" style="text-align: center;  width:60%;margin:auto;margin-top: 50px;display:grid;grid-template-columns: repeat(2,1fr);gap:20px;">
 
 <!-- appending here -->
@@ -43,8 +49,8 @@ page.style.display="block"
     }
 
 let maindiv=document.getElementById("main")
-function mydata(pag){
-    fetch(`https://mock4bakenddatafinal.onrender.com/freelancers?_page=${pag}&_limit=4`).then((res)=>
+function mydata(pag,value){
+    fetch(`https://mock4bakenddatafinal.onrender.com/freelancers?_page=${pag}&_limit=4${value?`&_sort=hourly_rate&_order=${value}`:""}`).then((res)=>
     
     {
         
@@ -62,6 +68,30 @@ getdata(reso)}
 mydata(pag)
 
 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+let sorting=document.getElementById("sort")
+
+sorting.addEventListener("change",()=>{
+    mydata(pag,sorting.value)
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 let total=0
 function handle(totalpage){
     total=total+totalpage
