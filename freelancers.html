@@ -55,8 +55,8 @@ page.style.display="block"
     }
 
 let maindiv=document.getElementById("main")
-function mydata(pag,value,filter){
-    fetch(`https://mock4bakenddatafinal.onrender.com/freelancers?_page=${pag}&_limit=4${value?`&_sort=hourly_rate&_order=${value}`:""}${filter?`&profession=${filter}`:""}`).then((res)=>
+function mydata(pag,value,filter,searching){
+    fetch(`https://mock4bakenddatafinal.onrender.com/freelancers?_page=${pag}&_limit=4${value?`&_sort=hourly_rate&_order=${value}`:""}${filter?`&profession=${filter}`:""}${searching?`&name=${searching}`:""}`).then((res)=>
     
     {
         
@@ -78,20 +78,27 @@ mydata(pag)
 let sorting=document.getElementById("sort")
 let filter;
 let sortingvalue;
+let searchingvalue
 sorting.addEventListener("change",()=>{
     sortingvalue=sorting.value
-    mydata(pag,sorting.value,filter)
+    mydata(pag,sorting.value,filter,searchingvalue)
 
 
 })
 let filterdata=document.getElementById("filter")
 filterdata.addEventListener("change",()=>{
 filter=filterdata.value
-mydata(pag,sortingvalue,filter)
+mydata(pag,sortingvalue,filter,searchingvalue)
 
 
 
 })
+let searching=document.getElementById("search")
+searching.addEventListener("change",()=>{
+    searchingvalue=searching.value
+mydata(pag,sortingvalue,filter,searchingvalue)
+})
+
 
 
 
